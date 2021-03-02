@@ -12,12 +12,13 @@ abstract class PlayerDB: RoomDatabase() {
         @Volatile
         private var INSTANCE: PlayerDB? = null
         fun getInstance(context: Context): PlayerDB {
+            val c = MyApp.appCntx // read context from app object
             synchronized(this) {
                 var instance =
                     INSTANCE
                 if(instance == null) {
                     instance = Room.databaseBuilder(
-                        context,
+                        c,
                         PlayerDB::class.java,
                         "player_database"
                     ).fallbackToDestructiveMigration().build()
