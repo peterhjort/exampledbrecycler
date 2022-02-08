@@ -3,13 +3,12 @@ package com.example.exampledbrecycler
 import android.app.Application
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,9 +31,9 @@ class MainActivity : AppCompatActivity() {
         binding.playerView.adapter = adapter
         binding.playerView.layoutManager = LinearLayoutManager(this)
 
-        viewModel.players.observe(this, {
+        viewModel.players.observe(this) {
             adapter.submitList(it)
-        })
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -61,7 +60,7 @@ class PlayerListAdapter(private val context: Context): ListAdapter<Player, Playe
     }
 
     override fun onBindViewHolder(holder: PlayerViewHolder, position: Int) {
-        // could use binding?
+        // could use binding? anyway, skipped here
         holder.itemView.findViewById<TextView>(R.id.playername).text = getItem(position).name
         holder.itemView.findViewById<TextView>(R.id.playerteam).text = getItem(position).team
     }
@@ -74,10 +73,10 @@ class PlayerDiffCallback: DiffUtil.ItemCallback<Player>() {
         return oldItem.id == newItem.id
     }
     override fun areContentsTheSame(oldItem: Player, newItem: Player): Boolean {
-        return oldItem.name == newItem.name
+        return oldItem.name == newItem.name && oldItem.team == newItem.team
     }
 }
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
-    val players: LiveData<List<Player>> = PlayerDB.getInstance(application.applicationContext).playerDAO.getAll()
+    val players = PlayerRepository.players
 }

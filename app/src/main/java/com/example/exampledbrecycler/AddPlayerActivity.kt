@@ -42,11 +42,8 @@ class AddPlayerActivity : AppCompatActivity() {
 
 class AddPlayerViewModel(application: Application) : AndroidViewModel(application) {
     fun addPlayer(name: String, team: String, year: Int, points: Int) {
-        val context = getApplication<Application>().applicationContext
         viewModelScope.launch {
-            PlayerDB.getInstance(context)
-                .playerDAO
-                .insertOrUpdate(Player(0, name, team, year, points))
+            PlayerRepository.addPlayer(name, team, year, points)
         }
     }
 }
