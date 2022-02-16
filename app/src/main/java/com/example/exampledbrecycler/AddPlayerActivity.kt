@@ -41,9 +41,11 @@ class AddPlayerActivity : AppCompatActivity() {
 }
 
 class AddPlayerViewModel(application: Application) : AndroidViewModel(application) {
+    private val repository = PlayerRepository()
+
     fun addPlayer(name: String, team: String, year: Int, points: Int) {
         viewModelScope.launch {
-            PlayerRepository.addPlayer(name, team, year, points)
+            repository.addPlayer(name, team, year, points)
         }
     }
 }
