@@ -2,7 +2,7 @@ package com.example.exampledbrecycler
 
 import androidx.lifecycle.LiveData
 
-class PlayerRepository {
+object PlayerRepository {
     suspend fun addPlayer(name: String, team: String, year: Int, points: Int) {
         PlayerDB.getInstance()
             .playerDAO

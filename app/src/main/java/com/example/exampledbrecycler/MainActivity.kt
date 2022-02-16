@@ -78,6 +78,5 @@ class PlayerDiffCallback: DiffUtil.ItemCallback<Player>() {
 }
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository = PlayerRepository()
-    val players = repository.getPlayers()
+    val players = PlayerRepository.getPlayers()
 }
